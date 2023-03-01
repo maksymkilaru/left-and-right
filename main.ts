@@ -1,15 +1,15 @@
+let usersequence: number[] = []
 let randomside = 0
 let index = 0
+let correctsequence: number[] = []
 let complexity = 2
 let level = 1
 let speedsequence = 1000
-let correctsequence : number[] = []
-let usersequence : number[] = []
-basic.forever(function on_forever() {
-    
+let win = true
+basic.forever(function () {
     correctsequence = []
     correctsequence = []
-    basic.showString("" + ("" + level))
+    basic.showString("" + level)
     basic.pause(1000)
     index = 0
     for (let index2 = 0; index2 < complexity; index2++) {
@@ -19,38 +19,37 @@ basic.forever(function on_forever() {
         if (randomside == 0) {
             basic.showLeds(`
                 # # # . .
-                                # # # . .
-                                # # # . .
-                                # # # . .
-                                # # # . .
-            `)
+                # # # . .
+                # # # . .
+                # # # . .
+                # # # . .
+                `)
             basic.pause(speedsequence)
             basic.clearScreen()
             basic.pause(speedsequence)
         } else if (randomside == 1) {
             basic.showLeds(`
                 . . # # #
-                                . . # # #
-                                . . # # #
-                                . . # # #
-                                . . # # #
-            `)
+                . . # # #
+                . . # # #
+                . . # # #
+                . . # # #
+                `)
             basic.pause(speedsequence)
             basic.clearScreen()
             basic.pause(speedsequence)
         } else if (randomside == 2) {
             basic.showLeds(`
                 # # # # #
-                                # # # # #
-                                # # # # #
-                                # # # # #
-                                # # # # #
-            `)
+                # # # # #
+                # # # # #
+                # # # # #
+                # # # # #
+                `)
             basic.pause(speedsequence)
             basic.clearScreen()
             basic.pause(100)
         }
-        
     }
     basic.showIcon(IconNames.Happy)
     basic.pause(100)
@@ -62,36 +61,35 @@ basic.forever(function on_forever() {
             index += 1
             basic.showLeds(`
                 # # # . .
-                                # # # . .
-                                # # # . .
-                                # # # . .
-                                # # # . .
-            `)
+                # # # . .
+                # # # . .
+                # # # . .
+                # # # . .
+                `)
             basic.clearScreen()
         } else if (input.buttonIsPressed(Button.B)) {
             usersequence[index] = parseFloat("1")
             index += 1
             basic.showLeds(`
                 . . # # #
-                                . . # # #
-                                . . # # #
-                                . . # # #
-                                . . # # #
-            `)
+                . . # # #
+                . . # # #
+                . . # # #
+                . . # # #
+                `)
             basic.clearScreen()
         } else if (input.buttonIsPressed(Button.AB)) {
             usersequence[index] = parseFloat("2")
             index += 1
             basic.showLeds(`
                 # # # # #
-                                # # # # #
-                                # # # # #
-                                # # # # #
-                                # # # # #
-            `)
+                # # # # #
+                # # # # #
+                # # # # #
+                # # # # #
+                `)
             basic.clearScreen()
         }
-        
     }
     index = 0
     for (let value of correctsequence) {
@@ -102,16 +100,19 @@ basic.forever(function on_forever() {
             correctsequence = []
             usersequence = []
             level = 0
-            break
+            win = false
+            break;
         }
-        
     }
-    if (level > 0) {
+    if (win == true) {
         basic.showIcon(IconNames.Yes)
         speedsequence = speedsequence / 1.2
         complexity = Math.constrain(complexity + 1, 2, 20)
+    } else {
+        complexity = 2
+        speedsequence = 1000
     }
-    
+    win = true
     level = level + 1
     basic.pause(1000)
 })
